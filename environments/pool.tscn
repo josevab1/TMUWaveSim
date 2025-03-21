@@ -14,7 +14,7 @@ background_mode = 2
 sky = SubResource("Sky_umobs")
 tonemap_mode = 2
 glow_enabled = true
-volumetric_fog_enabled = true
+fog_light_energy = 1.65
 volumetric_fog_density = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_21oeg"]
@@ -30,7 +30,7 @@ size = Vector3(10, 6, 25)
 material = ExtResource("1_ms2nu")
 size = Vector3(25, 9, 25)
 
-[node name="Environment" type="Node3D"]
+[node name="Pool" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_t8ndg")
