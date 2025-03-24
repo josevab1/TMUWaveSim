@@ -12,7 +12,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var input := Vector3.ZERO
 	input.x = Input.get_axis("ui_left","ui_right")
-	input.z = Input.get_axis("ui_up","ui_down")
+	input.y = Input.get_axis("ui_up","ui_down")
+	input.z = Input.get_axis("ui_forwards","ui_backwards")
 	apply_central_force(input * 1200.0 * delta)
 	if Input.is_action_just_pressed(("ui_cancel")):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
