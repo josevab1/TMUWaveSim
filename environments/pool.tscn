@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqvrtv6hda61k"]
+[gd_scene load_steps=16 format=3 uid="uid://bqvrtv6hda61k"]
 
-[ext_resource type="Material" uid="uid://dxwo62upcuc3e" path="res://materials/poolwater.tres" id="1_ms2nu"]
+[ext_resource type="Shader" path="res://shaders/poolwater.gdshader" id="1_yh2dm"]
 [ext_resource type="PackedScene" uid="uid://benljt4yfpdob" path="res://Player/player.tscn" id="2_510ny"]
+[ext_resource type="PackedScene" uid="uid://dcfkwh7rudli8" path="res://GUI/pause menu/pause_menu.tscn" id="4_87h15"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5oukk"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -27,9 +28,44 @@ material = SubResource("StandardMaterial3D_5b8xk")
 left_to_right = 1.1
 size = Vector3(10, 6, 25)
 
-[sub_resource type="BoxMesh" id="BoxMesh_aosb3"]
-material = ExtResource("1_ms2nu")
-size = Vector3(25, 9, 25)
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_m8k0c"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_p2kp7"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_m8k0c")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xb4j7"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fsmsv"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_xb4j7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_orpse"]
+render_priority = 0
+shader = ExtResource("1_yh2dm")
+shader_parameter/albedo = Color(0.298039, 0.435294, 0.760784, 0.615686)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/refraction = 0.05
+shader_parameter/refraction_texture_channel = null
+shader_parameter/normal_scale = 1.0
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = Vector3(0.1, 0.1, 0.1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_roughness = SubResource("NoiseTexture2D_fsmsv")
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_p2kp7")
+
+[sub_resource type="BoxMesh" id="BoxMesh_8bjex"]
+material = SubResource("ShaderMaterial_orpse")
+flip_faces = true
+size = Vector3(25, 0, 25)
 
 [node name="Pool" type="Node3D"]
 
@@ -58,8 +94,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -1, 0)
 mesh = SubResource("PrismMesh_7b46d")
 
 [node name="Pool Water Texture" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_aosb3")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+mesh = SubResource("BoxMesh_8bjex")
 
 [node name="Player" parent="." instance=ExtResource("2_510ny")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
 linear_damp = 3.0
+
+[node name="Pause Menu" parent="." instance=ExtResource("4_87h15")]

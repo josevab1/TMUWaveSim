@@ -1,5 +1,8 @@
 extends RigidBody3D
 
+# need yawing and strafing
+# need 1stpov and 3rdpov cams when moving
+
 var mouse_sens := 0.001
 var twist_input := 0.0
 var pitch_input := 0.0
